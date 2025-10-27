@@ -1,0 +1,158 @@
+.container{
+    margin: 0 14px;
+}
+
+.form{
+    width: 100%;
+    display: flex;
+    gap: 24px;
+}
+
+.form input{
+    width: 100%;
+    height: 44px;
+    border: 0;
+    padding: 0 8px;
+    border-radius: 4px;
+    outline: none;
+    background-color: #fff;
+}
+
+.form button{
+    background-color: transparent;
+}
+
+table{
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption{
+    font-size: 16px;
+    margin: 0.5rem 0.75rem;
+}
+
+.tr{
+    background-color: #1d1c20;
+    ;
+}
+
+td:first-child,
+th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+td:last-child,
+th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+table th, table td{
+    text-align: center;
+    padding: 14px;
+}
+
+.tdCoin{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.tdLabel{
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.tdProfit{
+    color: #12f98a;
+    font-weight: bold;
+}
+
+.tdLoss{
+    color: #f91257;
+    font-weight: bold;
+}
+
+.buttonMore{
+    border-radius: 4px;
+    background-color: #30beff;
+    color: #fff;
+    padding: 8px 24px;
+    margin: 14px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.logo{
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Mobile */
+
+@media screen and (max-width: 600px) {
+    .form{
+       flex-direction: row;
+    }
+
+    .form button{
+        border: 0;
+        border-radius: 4px;
+        color: #000;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    table td{
+        border-bottom: 1px solid rgba(221, 221, 221, 0.170);
+        display: block;
+        text-align: right;
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    table td::before{
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table caption{
+        font-size: 14px;
+        margin: 0.25rem 0.5rem;
+    }
+    
+    table thead{
+        border: none;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        position: absolute;
+        width: 1px;
+        padding: 0;
+    }
+
+    .tdLabel{
+        font-size: 14px;
+    }
+    .tr{
+        border-bottom: 1px solid #DDD;
+        display: block;
+        margin-bottom: 14px;
+    }
+
+    table td:last-child{
+        border-radius: 0;
+    }
+}

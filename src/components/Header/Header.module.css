@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    max-width: 1080px;
+}
+
+.title{
+    color: #fff;
+    font-size: 60px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.title strong{
+    color: #30beff; 
+    filter: brightness();
+}
