@@ -1,91 +1,17 @@
 import { BsSearch } from "react-icons/bs";
 import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, type FormEvent, useEffect } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
+import { useAPI } from "../../context/APIContext";
 
-interface CoinProps {
-  id: string;
-  symbol: string;
-  name: string;
-  image: string;
-  current_price: number;
-  market_cap: number;
-  market_cap_rank: number;
-  fully_diluted_valuation: number;
-  total_volume: number;
-  high_24h: number;
-  low_24h: number;
-  price_change_24h: number;
-  price_change_percentage_24h: number | string;
-  market_cap_change_24h: number;
-  market_cap_change_percentage_24h: number;
-  circulating_supply: number;
-  total_supply: number;
-  max_supply: number;
-  ath: number;
-  ath_change_percentage: number;
-  ath_date: string;
-  atl: number;
-  atl_change_percentage: number;
-  atl_date: string;
-  roi: null;
-  last_updated: string;
-}
+type HomeProps = {
+  children: ReactNode;
+};
 
-export function Home() {
+export default function Home(props: HomeProps) {
   const [input, setInput] = useState("");
-  const [coins, setCoins] = useState<CoinProps[]>([]);
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getData();
-    };
-
-    fetchData();
-  }, []);
-
-  async function getData() {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
-    );
-
-    const data = await response.json();
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const formattedCoins = data.map((item: any) => {
-      const formatted = {
-        ...item,
-        current_price: item.current_price.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
-        market_cap: item.market_cap.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-          notation: "compact",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
-        total_volume: item.total_volume.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-          notation: "compact",
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }),
-        price_change_percentage_24h:
-          item.price_change_percentage_24h.toFixed(2) + "%",
-      };
-      return formatted;
-    });
-
-    console.log(formattedCoins);
-    setCoins(formattedCoins);
-  }
+  const { coins } = useAPI();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -102,6 +28,7 @@ export function Home() {
   }
   return (
     <main className={styles.container}>
+      {props.children}
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"
