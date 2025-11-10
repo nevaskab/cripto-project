@@ -1,14 +1,10 @@
 import { BsSearch } from "react-icons/bs";
 import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
 import { useAPI } from "../../context/APIContext";
 
-type HomeProps = {
-  children: ReactNode;
-};
-
-export default function Home(props: HomeProps) {
+export function Home() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
   const { coins } = useAPI();
@@ -28,7 +24,6 @@ export default function Home(props: HomeProps) {
   }
   return (
     <main className={styles.container}>
-      {props.children}
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type="text"

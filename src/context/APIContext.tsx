@@ -51,7 +51,6 @@ interface formattedCoinsProps
 
 interface APIContextProps {
   coins: formattedCoinsProps[];
-  loading: boolean;
   getData: () => Promise<void>;
 }
 
@@ -59,11 +58,9 @@ const APIContext = createContext<APIContextProps | undefined>(undefined);
 
 export function APIProvider({ children }: { children: ReactNode }) {
   const [coins, setCoins] = useState<formattedCoinsProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
   const getData = async () => {
     try {
-      setLoading(true);
       const response = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
       );
@@ -98,8 +95,6 @@ export function APIProvider({ children }: { children: ReactNode }) {
       setCoins(formattedCoins);
     } catch (error) {
       console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -108,7 +103,7 @@ export function APIProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <APIContext.Provider value={{ coins, loading, getData }}>
+    <APIContext.Provider value={{ coins, getData }}>
       {children}
     </APIContext.Provider>
   );

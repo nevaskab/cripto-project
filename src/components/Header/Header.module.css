@@ -17,3 +17,9 @@
     color: #30beff; 
     filter: brightness();
 }
+
+@media screen and (max-width: 600px){
+    .title{
+        font-size: 40px;
+    }
+}

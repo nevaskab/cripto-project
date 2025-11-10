@@ -3,9 +3,11 @@ import { Header } from "../Header/Header";
 
 export function Layout() {
   return (
-    <>
+    <div>
       <Header />
-      <Outlet />
-    </>
+      <main>
+        <Outlet />{" "}
+      </main>
+    </div>
   );
 }
