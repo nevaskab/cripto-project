@@ -7,7 +7,7 @@ import { useAPI } from "../../context/APIContext";
 export function Home() {
   const [input, setInput] = useState("");
   const navigate = useNavigate();
-  const { coins } = useAPI();
+  const { coins, handleGetMore } = useAPI();
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -19,9 +19,6 @@ export function Home() {
     setInput("");
   }
 
-  function handleGetMore() {
-    console.log("Carregar mais...");
-  }
   return (
     <main className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit}>

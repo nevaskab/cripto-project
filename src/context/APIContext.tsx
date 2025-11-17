@@ -51,18 +51,20 @@ interface formattedCoinsProps
 
 interface APIContextProps {
   coins: formattedCoinsProps[];
-  getData: () => Promise<void>;
+  getData: (pageNumber?: number) => Promise<void>;
+  handleGetMore: () => void;
 }
 
 const APIContext = createContext<APIContextProps | undefined>(undefined);
 
 export function APIProvider({ children }: { children: ReactNode }) {
   const [coins, setCoins] = useState<formattedCoinsProps[]>([]);
+  const [page, setPage] = useState(1);
 
-  const getData = async () => {
+  const getData = async (pageNumber = 1) => {
     try {
       const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false"
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=${pageNumber}&sparkline=false`
       );
       const data: CoinProps[] = await response.json();
 
@@ -90,20 +92,30 @@ export function APIProvider({ children }: { children: ReactNode }) {
         }),
         price_change_percentage_24h:
           Number(item.price_change_percentage_24h).toFixed(2) + "%",
+        symbol: item.symbol.toUpperCase(),
+        last_updated: new Date(item.last_updated).toLocaleString(),
       }));
 
-      setCoins(formattedCoins);
+      if (pageNumber === 1) {
+        setCoins(formattedCoins);
+      } else {
+        setCoins((prevCoins) => [...prevCoins, ...formattedCoins]);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  const handleGetMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
   useEffect(() => {
-    getData();
-  }, []);
+    getData(page);
+  }, [page]);
 
   return (
-    <APIContext.Provider value={{ coins, getData }}>
+    <APIContext.Provider value={{ coins, getData, handleGetMore }}>
       {children}
     </APIContext.Provider>
   );

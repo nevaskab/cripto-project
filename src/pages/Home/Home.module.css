@@ -166,6 +166,10 @@ table th, table td{
         padding: 0;
     }
 
+    img{
+        margin-left: auto;
+    }
+
     .tdLoss, .tdProfit{
         color: #fff;
     }
